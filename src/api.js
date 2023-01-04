@@ -21,15 +21,3 @@ export async function handler (event, context) {
     }
   }
 }
-
-// {
-// 	"blocks": [
-// 		{
-// 			"type": "section",
-// 			"text": {
-// 				"type": "mrkdwn",
-// 				"text": "A message *with some bold text* and _some italicized text_."
-// 			}
-// 		}
-// 	]
-// }
