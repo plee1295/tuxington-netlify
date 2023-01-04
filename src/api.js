@@ -1,19 +1,35 @@
-const express = require('express')
-const serverless = require('serverless-http')
+require('dotenv').config()
+import { App, ExpressReceiver } from '@slack/bolt'
 
-const app = express()
-const router = express.Router()
-
-app.use(express.json())
-
-router.get('/', (req, res) => {
-  res.json({'hello': 'world'})
+const expressReceiver = new ExpressReceiver({
+  signingSecret: `${process.env.SLACK_SIGNING_SECRET}`,
+  processBeforeResponse: true
 })
 
-router.post('/', (req, res) => {
-  res.json({'challenge': req.body.challenge})
+const app = new App({
+  signingSecret: `${process.env.SLACK_SIGNING_SECRET}`,
+  token: `${process.env.SLACK_BOT_TOKEN}`,
+  receiver: expressReceiver
 })
 
-app.use('/.netlify/functions/api', router)
+export async function handler (event, context) {
+  const payload = event?.body ? JSON.parse(event.body) : undefined
+  if (payload && payload.type && payload.type === 'url_verification') {
+    return {
+      statusCode: 200,
+      body: payload.challenge
+    }
+  }
+}
 
-module.exports.handler = serverless(app)
+// {
+// 	"blocks": [
+// 		{
+// 			"type": "section",
+// 			"text": {
+// 				"type": "mrkdwn",
+// 				"text": "A message *with some bold text* and _some italicized text_."
+// 			}
+// 		}
+// 	]
+// }

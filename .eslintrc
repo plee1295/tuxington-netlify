@@ -1,0 +1,13 @@
+{
+  "root": true,
+  "extends": [
+      "standard",
+      "plugin:vue/recommended"
+  ],
+  "rules": {
+      "no-console": 2,
+      "no-debugger": 2,
+      "handle-callback-err": "off",
+      "no-useless-escape": 0
+  }
+}
