@@ -12,6 +12,26 @@ const app = new App({
   receiver: expressReceiver
 })
 
+app.event('app_mention', async ({ event, context, client, say }) => {
+  if (event.text.includes('joke')) {
+    try {
+      await say({
+        'blocks': [
+          {
+            'type': 'section',
+            'text': {
+              'type': 'mrkdwn',
+              'text': 'This is an example joke response.'
+            }
+          }
+        ]
+      })
+    } catch (error) {
+      console.log(error)
+    }
+  }
+})
+
 export async function handler (event, context) {
   const payload = event?.body ? JSON.parse(event.body) : undefined
   if (payload && payload.type && payload.type === 'url_verification') {
