@@ -1,11 +1,11 @@
 const { App, ExpressReceiver } = require('@slack/bolt')
-const axios = require('axios')
 const dotenv = require('dotenv')
 const {
   parseRequestBody,
   generateReceiverEvent,
   isUrlVerificationRequest
 } = require("./utils/utils")
+const { getRandomJoke } = require('./requests')
 
 dotenv.config()
 
@@ -23,14 +23,16 @@ const app = new App({
 app.event('app_mention', async ({ event, context, client, say }) => {
   if (event.text.includes('joke')) {
     try {
-      // const response = await axios.get('https://official-joke-api.appspot.com/jokes/random')
+      const data = getRandomJoke()
+      const text = data ? `${data.setup} ${data.punchline}` : 'Sorry, I could not think of one right now.'
+
       await say({
         'blocks': [
           {
             'type': 'section',
             'text': {
               'type': 'mrkdwn',
-              'text': 'Just make me work...' // `${response.data.setup} ${response.data.punchline}`
+              'text': text
             }
           }
         ]
