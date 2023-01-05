@@ -23,7 +23,7 @@ const app = new App({
 app.event('app_mention', async ({ event, context, client, say }) => {
   if (event.text.includes('joke')) {
     try {
-      const data = getRandomJoke()
+      const data = await getRandomJoke()
 
       await say({
         'blocks': [
