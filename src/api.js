@@ -1,5 +1,12 @@
-require('dotenv').config()
-import { App, ExpressReceiver } from '@slack/bolt'
+const { App, ExpressReceiver } = require('@slack/bolt')
+const dotenv = require('dotenv')
+const {
+  parseRequestBody,
+  generateReceiverEvent,
+  isUrlVerificationRequest
+} = require("./utils/utils")
+
+dotenv.config()
 
 const expressReceiver = new ExpressReceiver({
   signingSecret: `${process.env.SLACK_SIGNING_SECRET}`,
@@ -32,12 +39,21 @@ app.event('app_mention', async ({ event, context, client, say }) => {
   }
 })
 
-export async function handler (event, context) {
-  const payload = event?.body ? JSON.parse(event.body) : undefined
-  if (payload && payload.type && payload.type === 'url_verification') {
+exports.handler = async (event, context) => {
+  const payload = parseRequestBody(event.body, event.headers['content-type'])
+
+  if (isUrlVerificationRequest(payload)) {
     return {
       statusCode: 200,
-      body: payload.challenge
+      body: payload?.challenge
     }
+  }
+
+  const slackEvent = generateReceiverEvent(payload)
+  await app.processEvent(slackEvent)
+
+  return {
+    statusCode: 200,
+    body: ''
   }
 }
