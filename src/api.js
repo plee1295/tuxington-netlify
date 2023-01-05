@@ -1,4 +1,5 @@
 const { App, ExpressReceiver } = require('@slack/bolt')
+const axios = require('axios')
 const dotenv = require('dotenv')
 const {
   parseRequestBody,
@@ -22,13 +23,14 @@ const app = new App({
 app.event('app_mention', async ({ event, context, client, say }) => {
   if (event.text.includes('joke')) {
     try {
+      const { data } = await axios.get('https://icanhazdadjoke.com/')
       await say({
         'blocks': [
           {
             'type': 'section',
             'text': {
               'type': 'mrkdwn',
-              'text': 'This is an example joke response.'
+              'text': data.joke
             }
           }
         ]
