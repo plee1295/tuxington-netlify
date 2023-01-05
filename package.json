@@ -12,7 +12,6 @@
   "license": "ISC",
   "dependencies": {
     "@slack/bolt": "^3.12.2",
-    "axios": "^1.2.2",
     "dotenv": "^16.0.3",
     "netlify-lambda": "^2.0.15"
   },

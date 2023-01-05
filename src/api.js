@@ -5,7 +5,7 @@ const {
   generateReceiverEvent,
   isUrlVerificationRequest
 } = require('./utils')
-const { getRandomJoke } = require('./requests')
+const { jokes } = require('./jokes')
 
 dotenv.config()
 
@@ -23,7 +23,7 @@ const app = new App({
 app.event('app_mention', async ({ event, context, client, say }) => {
   if (event.text.includes('joke')) {
     try {
-      const data = await getRandomJoke()
+      const joke = jokes[Math.floor(Math.random() * jokes.length)]
 
       await say({
         'blocks': [
@@ -31,7 +31,7 @@ app.event('app_mention', async ({ event, context, client, say }) => {
             'type': 'section',
             'text': {
               'type': 'mrkdwn',
-              'text': `${data.setup} ${data.punchline}`
+              'text': joke
             }
           }
         ]
