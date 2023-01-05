@@ -23,7 +23,7 @@ const app = new App({
 app.event('app_mention', async ({ event, context, client, say }) => {
   if (event.text.includes('joke')) {
     try {
-      const response = await axios.get('https://icanhazdadjoke.com/')
+      const response = await axios.get('https://official-joke-api.appspot.com/jokes/random')
       await say({
         'blocks': [
           {
