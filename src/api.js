@@ -30,7 +30,7 @@ app.event('app_mention', async ({ event, context, client, say }) => {
             'type': 'section',
             'text': {
               'type': 'mrkdwn',
-              'text': `${response.data.setup} ${response.data.punchline}`
+              'text': response?.data ? `${response.data.setup} ${response.data.punchline}` : 'Sorry, I can\'t think of any right now.'
             }
           }
         ]
