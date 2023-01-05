@@ -23,14 +23,14 @@ const app = new App({
 app.event('app_mention', async ({ event, context, client, say }) => {
   if (event.text.includes('joke')) {
     try {
-      const response = await axios.get('https://official-joke-api.appspot.com/jokes/random')
+      // const response = await axios.get('https://official-joke-api.appspot.com/jokes/random')
       await say({
         'blocks': [
           {
             'type': 'section',
             'text': {
               'type': 'mrkdwn',
-              'text': response?.data ? `${response.data.setup} ${response.data.punchline}` : 'Sorry, I can\'t think of any right now.'
+              'text': 'Just make me work...' // `${response.data.setup} ${response.data.punchline}`
             }
           }
         ]
