@@ -23,7 +23,7 @@ const app = new App({
 app.event('app_mention', async ({ event, context, client, say }) => {
   if (event.text.includes('joke')) {
     try {
-      const joke = jokes[Math.floor(Math.random() * jokes.length)]
+      const obj = jokes[Math.floor(Math.random() * jokes.length)]
 
       await say({
         'blocks': [
@@ -31,7 +31,7 @@ app.event('app_mention', async ({ event, context, client, say }) => {
             'type': 'section',
             'text': {
               'type': 'mrkdwn',
-              'text': joke
+              'text': obj.joke
             }
           }
         ]
