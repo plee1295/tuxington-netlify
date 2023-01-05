@@ -30,7 +30,7 @@ app.event('app_mention', async ({ event, context, client, say }) => {
             'type': 'section',
             'text': {
               'type': 'mrkdwn',
-              'text': `${data.joke}`
+              'text': 'Is this working?'
             }
           }
         ]
