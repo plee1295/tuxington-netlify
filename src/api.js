@@ -23,14 +23,14 @@ const app = new App({
 app.event('app_mention', async ({ event, context, client, say }) => {
   if (event.text.includes('joke')) {
     try {
-      const { data } = await axios.get('https://icanhazdadjoke.com/')
+      const response = await axios.get('https://icanhazdadjoke.com/')
       await say({
         'blocks': [
           {
             'type': 'section',
             'text': {
               'type': 'mrkdwn',
-              'text': 'Is this working?'
+              'text': `${response.data.setup} ${response.data.punchline}`
             }
           }
         ]
