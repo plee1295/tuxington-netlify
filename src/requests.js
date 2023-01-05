@@ -6,7 +6,10 @@ function getRandomJoke () {
       return response.data
     })
     .catch(function (error) {
-      console.log(error)
+      return {
+        setup: 'Sorry, I could not think of one right now.',
+        punchline: ''
+      }
     })
 }
 
